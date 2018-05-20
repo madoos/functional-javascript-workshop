@@ -1,5 +1,3 @@
-
----
 ## Qué es la programación funcional
 
 Paradigma basado en programar con funciones
@@ -85,7 +83,3 @@ const newArray = array.concat(4);
 ### Ventajas de los datos inmutables
 
 *   Evitar efectos inesperados
-
---
-
----
