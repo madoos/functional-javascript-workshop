@@ -31,5 +31,3 @@ Verificar resultados:
 ```bash
 madoos-fp-js-workshop verify <FILE>
 ```
-
----
