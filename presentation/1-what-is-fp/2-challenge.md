@@ -13,3 +13,7 @@ Solución:
 ```javascript
 const apply = fn => args => fn(...args)
 ```
+
+--
+
+Conclusión
