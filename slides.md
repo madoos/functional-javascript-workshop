@@ -1,3 +1,5 @@
+
+---
 ## Qué es la programación funcional
 
 Paradigma basado en programar con funciones
@@ -6,9 +8,9 @@ Paradigma basado en programar con funciones
 
 ## Principios básicos
 
-* Funciones como ciudadanos de primera clase
-* Funciones puras (sin efectos secundarios)
-* Datos inmutables
+*   Funciones como ciudadanos de primera clase
+*   Funciones puras (sin efectos secundarios)
+*   Datos inmutables
 
 --
 
@@ -20,14 +22,14 @@ retornar funciones.
 
 ```javascript
 const filter = (predicate, xs) => {
-  const result = []
-  for (let idx = 0; idx < xs.length; idx++) {
-    if (predicate(xs[idx])) {
-      result.push(xs[idx])
+    const result = [];
+    for (let idx = 0; idx < xs.length; idx++) {
+        if (predicate(xs[idx])) {
+            result.push(xs[idx]);
+        }
     }
-  }
-  return result
-}
+    return result;
+};
 ```
 
 --
@@ -39,12 +41,12 @@ Una funcion es pura si el valor de retorno es determinado solamente por sus valo
 ```javascript
 // impure
 const add = (x, y) => {
-  launchMissiles()
-  return x + y
-}
+    launchMissiles();
+    return x + y;
+};
 
 // pure
-const add = (x, y) => x + y
+const add = (x, y) => x + y;
 ```
 
 --
@@ -55,23 +57,23 @@ const add = (x, y) => x + y
 
 ### Ventajas de las funciones puras
 
-* simples
-* fáciles de testear (sin mocks)
-* predecibles
-* permiten memoize al tener transparencia referencial
+*   simples
+*   fáciles de testear (sin mocks)
+*   predecibles
+*   permiten memoize al tener transparencia referencial
 
 --
 
 ### Datos inmutables
 
 ```javascript
-const array = [1, 2, 3]
+const array = [1, 2, 3];
 
 // mutable
-array.push(4)
+array.push(4);
 
 //immutable
-const newArray = array.concat(4)
+const newArray = array.concat(4);
 ```
 
 --
@@ -82,7 +84,7 @@ const newArray = array.concat(4)
 
 ### Ventajas de los datos inmutables
 
-* Evitar efectos inesperados
+*   Evitar efectos inesperados
 
 --
 
@@ -98,23 +100,23 @@ Sumar la edad de los usuarios adultos:
 
 ```javascript
 const users = [
-  {
-    name: "Jesús",
-    age: 27
-  },
-  {
-    name: "María",
-    age: 33
-  },
-  {
-    name: "Sara",
-    age: 34
-  },
-  {
-    name: "Pedro",
-    age: 15
-  }
-]
+    {
+        name: 'Jesús',
+        age: 27
+    },
+    {
+        name: 'María',
+        age: 33
+    },
+    {
+        name: 'Sara',
+        age: 34
+    },
+    {
+        name: 'Pedro',
+        age: 15
+    }
+];
 ```
 
 --
@@ -122,20 +124,20 @@ const users = [
 Imperativo:
 
 ```javascript
-let total = 0
-const adults = []
+let total = 0;
+const adults = [];
 
 for (let user of users) {
-  if (user.age > 18) {
-    adults.push(user)
-  }
+    if (user.age > 18) {
+        adults.push(user);
+    }
 }
 
 for (let adult of adults) {
-  total += adult.age
+    total += adult.age;
 }
 
-total // => 94
+console.log(total); // => 94
 ```
 
 --
@@ -143,14 +145,14 @@ total // => 94
 FP:
 
 ```javascript
-const isAdult = user => user.age > 18
-const prop = key => obj => obj[key]
-const add = (a, b) => a + b
+const isAdult = user => user.age > 18;
+const prop = key => obj => obj[key];
+const add = (a, b) => a + b;
 
 const total = users
-  .filter(isAdult)
-  .map(prop("age"))
-  .reduce(add, 0) // => 94
+    .filter(isAdult)
+    .map(prop('age'))
+    .reduce(add, 0); // => 94
 ```
 
 --
@@ -173,6 +175,206 @@ const apply = fn => args => fn(...args)
 --
 
 Conclusión
+
+---
+## Operaciones sobre listas
+
+### Obtener un array a partir de otro array
+
+```javascript
+const people = [
+    { name: 'Marcos', age: 1 },
+    { name: 'Laura', age: 25 },
+    { name: 'Luis', age: 35 },
+    { name: 'Javi', age: 27 }
+];
+
+let ages = [];
+for (let i = 0; i < people.length; i++) {
+    ages.push(people[i].age);
+}
+```
+
+--
+
+### Map
+
+```javascript
+const people = [
+    { name: 'Marcos', age: 1 },
+    { name: 'Laura', age: 25 },
+    { name: 'Luis', age: 35 },
+    { name: 'Javi', age: 27 }
+];
+
+//Array.map
+const ages = people.map(person => person.age);
+
+//map como función
+const ages = map(person => person.age, people);
+```
+
+--
+
+### Implementar map
+
+```javascript
+const map = (fn, array) => {
+    //???
+};
+```
+
+--
+
+### Implementaciones de map
+
+```javascript
+//Imperativa
+const map = (fn, array) => {
+    let result = [];
+    for (let i = 0; i < people.length; i++) {
+        result.push(fn(array[i]));
+    }
+    return result;
+};
+
+//Recursiva
+const map = (fn, array) => {
+    const [first, ...rest] = array;
+    return first === undefined ? [] : [fn(first), ...map(fn, rest)];
+};
+```
+
+--
+
+### Eliminar elementos de un array
+
+```javascript
+const people = [
+    { name: 'Marcos', age: 1 },
+    { name: 'Laura', age: 25 },
+    { name: 'Luis', age: 35 },
+    { name: 'Javi', age: 27 }
+];
+
+let adults;
+for (let i = 0; i < people.length; i++) {
+    if (people[i].age > 18) {
+        ages.push(people[i].age);
+    }
+}
+```
+
+--
+
+### Filter
+
+```javascript
+const people = [
+    { name: 'Marcos', age: 1 },
+    { name: 'Laura', age: 25 },
+    { name: 'Luis', age: 35 },
+    { name: 'Javi', age: 27 }
+];
+
+const adults = people.filter(person => person.age > 18);
+```
+
+--
+
+```javascript
+const people = [
+    { name: 'Marcos', age: 1 },
+    { name: 'Laura', age: 25 },
+    { name: 'Luis', age: 35 },
+    { name: 'Javi', age: 27 }
+];
+
+const adults = people.filter(person => person.age > 18);
+```
+
+--
+
+### Implementar filter
+
+```javascript
+const filter = (predicate, array) => {
+    //???
+};
+```
+
+--
+
+### Implementaciones de filter
+
+```javascript
+const filter = (predicate, array) => {
+    let result = [];
+    for (let i = 0; i < people.length; i++) {
+        if (predicate(array[i])) {
+            result.push(array[i]);
+        }
+    }
+    return result;
+};
+```
+
+--
+
+### Obtener un valor a partir de un array
+
+```javascript
+const people = [
+    { name: 'Marcos', age: 1 },
+    { name: 'Laura', age: 25 },
+    { name: 'Luis', age: 35 },
+    { name: 'Javi', age: 27 }
+];
+
+let totalAge;
+for (let i = 0; i < people.length; i++) {
+    totalAge += people[i].age;
+}
+```
+
+--
+
+### Reduce
+
+```javascript
+const people = [
+    { name: 'Marcos', age: 1 },
+    { name: 'Laura', age: 25 },
+    { name: 'Luis', age: 35 },
+    { name: 'Javi', age: 27 }
+];
+
+const totalAge = people.reduce((acc, person) => acc + person.age, 0);
+```
+
+--
+
+### Implementar reduce
+
+```javascript
+const reduce = (fn, base, list) => {
+    //???
+};
+```
+
+--
+
+### Implementaciones de reduce
+
+```javascript
+const reduce = (fn, base, list) => {
+    let result;
+    for (let i = 0; i < list.length; i++) {
+        result = fn(result, list[i]);
+    }
+    return result;
+};
+```
 
 ---
 ## Curry
