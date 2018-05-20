@@ -22,7 +22,8 @@
     "BASIC_MAP": "MAP BASICO",
     "TEST 1": "Test 1",
     "CURRY": "CURRY",
-    "COMPOSE": "COMPOSE"
+    "COMPOSE": "COMPOSE",
+    "FLIP": "FLIP"
   },
   "exercises": {
     "hof": {

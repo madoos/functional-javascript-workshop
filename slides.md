@@ -443,4 +443,47 @@ const composed = compose(toString, double, plus)
 
 Solución
 
+```javascript
+function compose(...fns) {
+  return function(arg) {
+    return fns.reduceRight((result, fn) => fn(result), arg)
+  }
+}
+```
+
+--
+
+La composición es extraña de leer porque se aplica de derecha a izquierda
+
+Es interesante tener una función que la aplique de izquierda a derecha
+
+--
+### flip Challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: FLIP
+# Seguir instrucciones
+```
+
+--
+
+Solución:
+
+```javascript
+function flip(fn) {
+  return function(...args) {
+    return fn([...args].reverse())
+  }
+}
+```
+
+```javascript
+const concat = (a, b) => `${a} ${b}`
+const concatReverse = flip(concat)
+
+concat("hello", "world") // => hello world
+concatReverse("hello", "world") // word hello
+```
+
 ---

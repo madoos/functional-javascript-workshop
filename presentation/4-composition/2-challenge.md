@@ -21,3 +21,17 @@ const composed = compose(toString, double, plus)
 --
 
 Solución
+
+```javascript
+function compose(...fns) {
+  return function(arg) {
+    return fns.reduceRight((result, fn) => fn(result), arg)
+  }
+}
+```
+
+--
+
+La composición es extraña de leer porque se aplica de derecha a izquierda
+
+Es interesante tener una función que la aplique de izquierda a derecha
