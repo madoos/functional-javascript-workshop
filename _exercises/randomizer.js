@@ -1,15 +1,13 @@
 "use strict"
 
-var loremIpsum = require("lorem-ipsum")
+var loremIpsum = require('lorem-ipsum')
 
 function randomArrayOf(minCells, maxCells, callback) {
-  if ("function" === typeof maxCells && "undefined" === typeof callback) {
+  if ('function' === typeof maxCells && 'undefined' === typeof callback) {
     callback = maxCells
     maxCells = minCells
   }
-  return Array.apply(null, { length: randomInt(minCells, maxCells) }).map(
-    callback
-  )
+  return Array.apply(null, { length: randomInt(minCells, maxCells) }).map(callback)
 }
 
 function randomArrayOfInts(maxCells, minInt, maxInt) {
@@ -27,21 +25,19 @@ function randomArrayOfLorems(minCells, maxCells) {
 
 function randomInt(min, max) {
   if (min === max) return max
-  return Math.floor(Math.random() * (max - min + 1) + min)
+  return Math.floor((Math.random() * (max - min + 1)) + min)
 }
 
 function randomWords(count, options) {
   options = options || {}
-  var result = loremIpsum()
-    .split(" ")
-    .slice(0, count)
+  var result = loremIpsum().split(' ').slice(0, count)
   if (options.capitalized) {
     result = result.map(function(word) {
       word = word[0].toUpperCase() + word.substring(1)
       return word
     })
   }
-  return result.join(" ")
+  return result.join(' ')
 }
 
 module.exports = {

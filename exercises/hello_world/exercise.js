@@ -1,5 +1,3 @@
-"use strict"
+const runner = require("../runner")
 
-var runner = require('../runner')
-
-module.exports = runner(require('lorem-ipsum')())
+module.exports = runner(require("lorem-ipsum")())
