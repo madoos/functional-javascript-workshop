@@ -2,11 +2,10 @@
 
 "use strict"
 
-var Workshopper = require('workshopper')
-var path = require('path')
+const Workshopper = require("./lib/Workshopper-extends")
 
 Workshopper({
-    name   : 'functional-javascript'
-  , appDir : __dirname
-  , languages   : ['en', 'fr', 'ko']
+  name: "functional-javascript",
+  appDir: __dirname,
+  languages: ["en", "fr", "ko"]
 })

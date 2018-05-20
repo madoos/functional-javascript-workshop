@@ -1,0 +1,26 @@
+{
+  // Utilizar IntelliSense para aprender acerca de los posibles atributos.
+  // Mantenga el puntero para ver las descripciones de los existentes atributos
+  // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Verify exercise",
+      "program": "${workspaceFolder}/functional-javascript.js",
+      "args": ["verify", "basic_map.js"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "show exercise",
+      "program": "${workspaceFolder}/functional-javascript.js",
+      "args": ["basic map"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}
