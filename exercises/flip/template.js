@@ -1,3 +1,3 @@
-module.exports = function compose(...fns) {
+module.exports = function flip(fn) {
   /* your implementation */
 }
