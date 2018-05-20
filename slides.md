@@ -186,23 +186,166 @@ Conclusión
 Muchas veces es necesario crear funciones a partir de funciones ya existentes.
 
 ```javascript
-const prop = (key obj) => obj[key]
-const getAge = (user) => prop('age', 'user')
+const prop = (key, obj) => obj[key]
+const getAge = user => prop("age", user)
 
-getAge({ age: 30}) // 30
+getAge({ age: 30 }) // 30
 ```
 
 --
 
 Ese es un proceso manual que puede hacer de forma automática.
 
-Si los usuarios tienen muchas propiedades se tendría que escribir una función por cada propiedad
+Si los usuarios tienen muchas propiedades se tendría que escribir una función por cada propiedad.
 
 ```javascript
-const prop = (key obj) => obj[key]
-const getAge = (user) => prop('age', 'user')
-const getName = (user) => prop('name', 'user')
-...
+const prop = (key, obj) => obj[key]
+const getAge = user => prop("age", user)
+const getName = user => prop("name", user)
+// ...
 ```
+
+--
+
+Imagina que las funciones tienen otro comportamiento:
+
+* si no se le dan todos los argumentos a una función no se ejecuta
+* retorna otra función que espera el siguiente argumento
+* cuándo tiene todos los argumentos se ejecuta
+
+```javascript
+const prop = (key, obj) => obj[key] // necesita 2 argumentos para funcionar
+
+const getAge = prop("age") // (key) => (user) => user[key]
+// retorna una función que ya conoce la propiedad a la que tiene que acceder  y espera el usuario para ejecutarse.
+
+getAge({ age: 88 }) // 88
+```
+
+--
+
+Con ese comportamiento podríamos escribir rápidamente funciones derivadas.
+
+```javascript
+const getAge = prop("age")
+const getName = prop("age")
+const getEmail = prop("email")
+```
+
+--
+
+En lenguajes funcionales las funciones se comportan exactamente de esa manera pero en JS no.
+
+--
+
+### ¿Cómo adquirimos ese comportamiento?
+
+--
+
+### Curry
+
+El proceso de convertir una función que toma multiples argumentos, en una función que los toma uno a la vez.
+
+Cada vez que la función es llamada, esta solamente acepta un argumento y retorna una funcion que toma el siguiente argumento y asi continua hasta que se pasen todos los argumentos.
+
+```javascript
+const sum = (a, b) => a + b
+const curriedSum = a => b => a + b
+curriedSum(40)(2) // 42.
+const add2 = curriedSum(2) // (b) => 2 + b
+
+add2(10) // 12
+```
+
+--
+
+## Currificando funciones
+
+```javascript
+const add = curry((a, b) => a + b)
+const numbers = [1, 2, 3, 4]
+
+numbers.map(add(1)) // => [2,3,4,5]
+numbers.reduce(add, 0) // => 14
+```
+
+--
+### curry Challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: CURRY
+# Seguir instrucciones
+```
+
+--
+
+Solución:
+
+```javascript
+module.exports = function curry(fn) {
+  return function(a, b) {
+    if (a === undefined) return fn
+    else if (b === undefined) return b => fn(a, b)
+    return fn(a, b)
+  }
+}
+```
+
+--
+
+Solución variadica:
+
+```javascript
+let curry = fn => { // (1)
+
+   let arity = fn.length; //(2) number of arguments fn expects
+   return function curried(…args){ // (3)
+     let firstArgs = args.length; // (4)
+     if (firstArgs >= arity) { //correct number of arguments
+
+       return fn(...args); // (5)
+     } else {
+       return (…secondArgs) => { // (6)
+          return curried(...[...args, ...secondArgs]); // (7)
+       }
+     }
+   }
+}
+```
+
+--
+
+## Aplicación parcial
+
+--
+
+Aplicar parcialmente una funcion, significa crear una nueva funcion rellenando previamente alguno de los argumentos de la funcion original.
+
+```javascript
+const partial = (f, ...args) => (...moreArgs) => f(...args, ...moreArgs)
+
+const add3 = (a, b, c) => a + b + c
+const fivePlus = partial(add3, 2, 3) // (c) => 2 + 3 + c
+fivePlus(4) // 9
+```
+
+--
+
+Aplicación parcial con bind
+
+```javascript
+const add1More = add3.bind(null, 2, 3) // (c) => 2 + 3 + c
+```
+
+--
+
+## Aplicación parcial vs curry
+
+* ¿Diferencias?
+
+--
+
+Conclusión
 
 ---
