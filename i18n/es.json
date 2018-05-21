@@ -23,7 +23,13 @@
     "REDUCE": "REDUCE",
     "CURRY": "CURRY",
     "COMPOSE": "COMPOSE",
-    "FLIP": "FLIP"
+    "FLIP": "FLIP",
+    "FLOW": "FLOW",
+    "MEMOIZE": "MEMOIZE",
+    "ONCE": "ONCE",
+    "MAP VALUES": "MAP VALUES",
+    "MAP KEYS": "MAP KEYS",
+    "MAP OBJECT": "MAP OBJECT"
   },
   "exercises": {
     "hof": {

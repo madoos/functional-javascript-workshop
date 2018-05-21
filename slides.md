@@ -608,6 +608,7 @@ Cada vez que la función es llamada, esta solamente acepta un argumento y retorn
 ```javascript
 const sum = (a, b) => a + b;
 const curriedSum = a => b => a + b;
+<<<<<<< HEAD
 
 //es equivalente a
 const curriedSum = function(a) {
@@ -616,6 +617,16 @@ const curriedSum = function(a) {
     };
 };
 
+=======
+
+//es equivalente a
+const curriedSum = function(a) {
+    return function(b) {
+        return a + b;
+    };
+};
+
+>>>>>>> 637be8be5f9af228dd30f66af38ee45930f9c042
 curriedSum(40)(2); // 42.
 const add2 = curriedSum(2); // (b) => 2 + b
 
@@ -858,6 +869,239 @@ const concatReverse = flip(concat)
 
 concat("hello", "world") // => hello world
 concatReverse("hello", "world") // word hello
+```
+
+--
+### flow Challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: FLOW
+# Seguir instrucciones
+```
+
+--
+
+Implementar la función flow variadica.
+Flow es como compose, la diferencia es que aplica las ejecuciones de izquierda a derecha
+
+```javascript
+const plus = x => x + 1
+const double = x => x * 2
+const toString = x => String(x)
+
+const flow = flow(plus, double, toString)
+```
+
+--
+
+Solución
+
+```javascript
+const flow = flip(compose)
+```
+
+--
+
+### conclusión
+
+---
+## Point free style
+
+--
+
+Poner las funciones en el lugar más conveniente
+
+--
+
+Es un estilo de escribir funciones donde la definicion de la funcion no identifica de forma explicita los argumentos utilizados. Este estilo usualmente requiere currying o otra Funcion de Orden Superior. Este estilo de programacion tambien es conocido como Programacion Tacita.
+
+```javascript
+const map = fn => list => list.map(fn)
+const add = a => b => a + b
+
+const incrementAll = numbers => map(add(1))(numbers)
+const incrementAll2 = map(add(1))
+```
+
+---
+### memoize Challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: MEMOIZE
+# Seguir instrucciones
+```
+
+--
+
+Crea una función que memoize el resultado de ejecuciones anteriores.
+
+--
+
+```javascript
+function fibonacci(n) {
+  if (n === 0 || n === 1) return n
+  else return fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+const fibonacciMemoized = memoize(fibonacci)
+
+fibonacciMemoized(3) // 6 Calcula una única vez
+fibonacciMemoized(3) // 6
+```
+
+--
+
+Solución:
+
+```javascript
+function memoize(func) {
+  const memo = {}
+  return function(x) {
+    if (x in memo) return memo[x]
+    return (memo[x] = func(x))
+  }
+}
+```
+
+--
+### once Challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: ONCE
+# Seguir instrucciones
+```
+
+--
+
+Crear una función que evite que otra funcion se ejecute más de una vez
+
+--
+
+```javascript
+const debug = x => console.log(x)
+
+const debugOnce = once(debug)
+
+debugOnce(5) // 5
+debugOnce(5) // no se ejecuta
+```
+
+--
+
+Solución:
+
+```javascript
+function once(func) {
+  let executed = false
+  return function(...args) {
+    if (!executed) {
+      executed = true
+      return func(...args)
+    }
+  }
+}
+```
+
+--
+### map values Challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: MAP OBJECT
+# Seguir instrucciones
+```
+
+--
+
+Implementar la función mapValues.
+
+--
+
+```javascript
+const double = x => x * 2
+mapValues(double, { a: 1, b: 2 }) // { a: 2, b: 4}
+```
+
+--
+
+Solución:
+
+```javascript
+function mapValues(fn, obj) {
+  return Object.keys(obj).reduce((mapped, key) => {
+    mapped[key] = fn(obj[key])
+    return mapped
+  }, {})
+}
+```
+
+--
+### map keys Challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: MAP KEYS
+# Seguir instrucciones
+```
+
+--
+
+Implementar la función mapKeys.
+
+--
+
+```javascript
+const toUpper = x => x.toUpperCase()
+mapKeys(toUpper, { a: 1, b: 2 }) // { A: 1, B: 2}
+```
+
+--
+
+Solución:
+
+```javascript
+function mapKeys(fn, obj) {
+  return Object.keys(obj).reduce((mapped, key) => {
+    mapped[fn(key)] = obj[key]
+    return mapped
+  }, {})
+}
+```
+
+--
+### map Object Challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: MAP OBJECT
+# Seguir instrucciones
+```
+
+--
+
+Implementar la función map para objectos.
+
+--
+
+```javascript
+const concatValueKey = (value, key, object) => `${key}-${value}`
+mapObject(concatValueKey, { a: 1, b: 2 }) // { a: "a-1", b: "b-2"}
+```
+
+--
+
+Solución:
+
+```javascript
+function mapObject(fn, obj) {
+  return Object.keys(obj).reduce((mapped, key) => {
+    mapped[key] = fn(obj[key], key, obj)
+    return mapped
+  }, {})
+}
 ```
 
 ---

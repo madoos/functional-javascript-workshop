@@ -1,1 +1,15 @@
-["HOF", "MAP", "FILTER", "REDUCE", "CURRY", "COMPOSE", "FLIP"]
+[
+  "HOF",
+  "MAP",
+  "FILTER",
+  "REDUCE",
+  "CURRY",
+  "COMPOSE",
+  "FLIP",
+  "FLOW",
+  "MEMOIZE",
+  "ONCE",
+  "MAP VALUES",
+  "MAP KEYS",
+  "MAP OBJECT"
+]
