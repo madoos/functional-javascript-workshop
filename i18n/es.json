@@ -25,7 +25,8 @@
     "COMPOSE": "COMPOSE",
     "FLIP": "FLIP",
     "FLOW": "FLOW",
-    "MEMOIZE": "MEMOIZE"
+    "MEMOIZE": "MEMOIZE",
+    "ONCE": "ONCE"
   },
   "exercises": {
     "hof": {

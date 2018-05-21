@@ -32,7 +32,7 @@ module.exports = runner.custom(function(memoize, fibonacci) {
     }
   } catch (e) {
     return {
-      isFlipped,
+      isMemorized,
       result: e.message
     }
   }

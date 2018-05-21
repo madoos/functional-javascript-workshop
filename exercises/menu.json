@@ -7,5 +7,6 @@
   "COMPOSE",
   "FLIP",
   "FLOW",
-  "MEMOIZE"
+  "MEMOIZE",
+  "ONCE"
 ]
