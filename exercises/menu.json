@@ -9,5 +9,6 @@
   "FLOW",
   "MEMOIZE",
   "ONCE",
-  "MAP VALUES"
+  "MAP VALUES",
+  "MAP KEYS"
 ]
