@@ -878,7 +878,7 @@ function once(func) {
 ```
 
 --
-### map Object Challenge
+### map values Challenge
 
 ```bash
 # Ejecutar en el terminal: madoos-fp-js-workshop
@@ -888,13 +888,13 @@ function once(func) {
 
 --
 
-Implementar la función map para objetos.
+Implementar la función mapValues.
 
 --
 
 ```javascript
 const double = x => x * 2
-mapObject(double, { a: 1, b: 2 }) // { a: 2, b: 4}
+mapValues(double, { a: 1, b: 2 }) // { a: 2, b: 4}
 ```
 
 --
@@ -902,7 +902,7 @@ mapObject(double, { a: 1, b: 2 }) // { a: 2, b: 4}
 Solución:
 
 ```javascript
-function mapObject(fn, obj) {
+function mapValues(fn, obj) {
   return Object.keys(obj).reduce((mapped, key) => {
     mapped[key] = fn(obj[key])
     return mapped

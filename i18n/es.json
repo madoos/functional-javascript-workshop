@@ -27,7 +27,7 @@
     "FLOW": "FLOW",
     "MEMOIZE": "MEMOIZE",
     "ONCE": "ONCE",
-    "MAP OBJECT": "MAP OBJECT"
+    "MAP VALUES": "MAP VALUES"
   },
   "exercises": {
     "hof": {
