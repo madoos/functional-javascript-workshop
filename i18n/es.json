@@ -24,7 +24,8 @@
     "CURRY": "CURRY",
     "COMPOSE": "COMPOSE",
     "FLIP": "FLIP",
-    "FLOW": "FLOW"
+    "FLOW": "FLOW",
+    "MEMOIZE": "MEMOIZE"
   },
   "exercises": {
     "hof": {

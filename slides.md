@@ -778,3 +778,63 @@ const flow = flip(compose)
 ### conclusión
 
 ---
+## Point free style
+
+--
+
+Poner las funciones en el lugar más conveniente
+
+--
+
+Es un estilo de escribir funciones donde la definicion de la funcion no identifica de forma explicita los argumentos utilizados. Este estilo usualmente requiere currying o otra Funcion de Orden Superior. Este estilo de programacion tambien es conocido como Programacion Tacita.
+
+```javascript
+const map = fn => list => list.map(fn)
+const add = a => b => a + b
+
+const incrementAll = numbers => map(add(1))(numbers)
+const incrementAll2 = map(add(1))
+```
+
+---
+### memoize Challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: MEMOIZE
+# Seguir instrucciones
+```
+
+--
+
+Crea una función que memoize el resultado de ejecuciones anteriores.
+
+--
+
+```javascript
+function fibonacci(n) {
+  if (n === 0 || n === 1) return n
+  else return fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+const fibonacciMemoized = memoize(fibonacci)
+
+fibonacciMemoized(3) // 6 Calcula una única vez
+fibonacciMemoized(3) // 6
+```
+
+--
+
+Solución:
+
+```javascript
+function memoize(func) {
+  const memo = {}
+  return function(x) {
+    if (x in memo) return memo[x]
+    return (memo[x] = func(x))
+  }
+}
+```
+
+---
