@@ -23,7 +23,8 @@
     "REDUCE": "REDUCE",
     "CURRY": "CURRY",
     "COMPOSE": "COMPOSE",
-    "FLIP": "FLIP"
+    "FLIP": "FLIP",
+    "FLOW": "FLOW"
   },
   "exercises": {
     "hof": {
