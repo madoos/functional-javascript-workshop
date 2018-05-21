@@ -26,7 +26,8 @@
     "FLIP": "FLIP",
     "FLOW": "FLOW",
     "MEMOIZE": "MEMOIZE",
-    "ONCE": "ONCE"
+    "ONCE": "ONCE",
+    "MAP OBJECT": "MAP OBJECT"
   },
   "exercises": {
     "hof": {
