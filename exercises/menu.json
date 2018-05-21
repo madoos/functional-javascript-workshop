@@ -10,5 +10,6 @@
   "MEMOIZE",
   "ONCE",
   "MAP VALUES",
-  "MAP KEYS"
+  "MAP KEYS",
+  "MAP OBJECT"
 ]
