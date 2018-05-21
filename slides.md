@@ -249,7 +249,13 @@ const ages = map(person => person.age, people);
 
 --
 
-### Implementar map
+### Map challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: MAP
+# Seguir instrucciones
+```
 
 ```javascript
 const map = (fn, array) => {
@@ -333,7 +339,13 @@ const adults = people.filter(person => person.age > 18);
 
 --
 
-### Implementar filter
+### Filter challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: FILTER
+# Seguir instrucciones
+```
 
 ```javascript
 const filter = (predicate, array) => {
@@ -392,7 +404,13 @@ const totalAge = people.reduce((acc, person) => acc + person.age, 0);
 
 --
 
-### Implementar reduce
+### Reduce challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: REDUCE
+# Seguir instrucciones
+```
 
 ```javascript
 const reduce = (fn, base, list) => {
@@ -414,6 +432,105 @@ const reduce = (fn, base, list) => {
 };
 ```
 
+--
+
+### Implementar filter y map con reduce
+
+--
+
+### Implementar filter y map con reduce
+
+```javascript
+const map = (fn, list) =>
+    list.reduce((acc, v) => {
+        acc.push(fn(v));
+        return acc;
+    }, []);
+
+const filter = (predicate, list) =>
+    list.reduce((acc, v) => {
+        if (predicate(v)) {
+            acc.push(fn(v));
+        }
+        return acc;
+    }, []);
+```
+
+--
+
+### Performance
+
+```javascript
+const accounts = [
+    { balance: 100, currency: 'EUR', userId: 1 },
+    { balance: 300, currency: 'EUR', userId: 2 },
+    { balance: 200, currency: 'USD', userId: 1 }
+];
+
+const balanceUsd = accounts
+    .filter(({ currency: c }) => c === 'USD') //una iteración
+    .map(({ balance }) => balance) //otra iteración
+    .reduce(add, 0); //y otra iteración :S
+```
+
+Operar sobre listas puede tener problemas de
+performance:
+
+*   En tiempo, por hacer más de una iteración
+*   En espacio, porque se crean arrays intermedios
+
+--
+
+### Performance
+
+Técnicas para mejorar la performance:
+
+*   Lazyness (tiempo y espacio)
+*   Structural sharing (espacio)
+*   Transducers (tiempo y espacio)
+
+--
+
+### Performance - Lazyness
+
+--
+
+### Performance - Structural Sharing
+
+```javascript
+const append = (item, array) => {
+    //array.push(item) // NO -> se modifica el array in-place
+    return [...array, item];
+};
+```
+
+La inmutabilidad puede tener mala performance:
+
+*   clonamos todo el array para añadir un elemento
+*   el recolector de basura tiene que eliminar muchos objetos
+
+--
+
+### Performance - Structural Sharing
+
+Podemos usar estructuras de datos persistentes, que preservan y utilizan
+la versión anterior de sí mismas al modificarse
+
+[Inmutable.js](https://facebook.github.io/immutable-js/) las implementa en JS.
+
+```javascript
+const { Map } = require('immutable');
+const map1 = Map({ a: 1, b: 2, c: 3 });
+const map2 = map1.set('b', 50);
+map1.get('b') + ' vs. ' + map2.get('b'); // 2 vs. 50
+```
+
+--
+
+### Performance - Transducers
+
+--
+
 ---
 ## Curry
 
@@ -426,40 +543,40 @@ const reduce = (fn, base, list) => {
 Muchas veces es necesario crear funciones a partir de funciones ya existentes.
 
 ```javascript
-const prop = (key, obj) => obj[key]
-const getAge = user => prop("age", user)
+const prop = (key, obj) => obj[key];
+const getAge = user => prop('age', user);
 
-getAge({ age: 30 }) // 30
+getAge({ age: 30 }); // 30
 ```
 
 --
 
 Ese es un proceso manual que puede hacer de forma automática.
 
-Si los usuarios tienen muchas propiedades se tendría que escribir una función por cada propiedad.
-
 ```javascript
-const prop = (key, obj) => obj[key]
-const getAge = user => prop("age", user)
-const getName = user => prop("name", user)
+const prop = (key, obj) => obj[key];
+const getAge = user => prop('age', user);
+const getName = user => prop('name', user);
 // ...
 ```
 
+Si los usuarios tienen muchas propiedades se tendría que escribir una función por cada propiedad.
+
 --
 
-Imagina que las funciones tienen otro comportamiento:
+Imagina que las funciones tuvieran otro comportamiento:
 
-* si no se le dan todos los argumentos a una función no se ejecuta
-* retorna otra función que espera el siguiente argumento
-* cuándo tiene todos los argumentos se ejecuta
+Si no se le dan todos los argumentos a una función no se ejecuta,
+retorna otra función que espera el siguiente argumento.
+Cuando tiene todos los argumentos se ejecuta.
 
 ```javascript
-const prop = (key, obj) => obj[key] // necesita 2 argumentos para funcionar
+const prop = (key, obj) => obj[key]; // necesita 2 argumentos para funcionar
 
-const getAge = prop("age") // (key) => (user) => user[key]
+const getAge = prop('age'); // (key) => (user) => user[key]
 // retorna una función que ya conoce la propiedad a la que tiene que acceder  y espera el usuario para ejecutarse.
 
-getAge({ age: 88 }) // 88
+getAge({ age: 88 }); // 88
 ```
 
 --
@@ -467,14 +584,14 @@ getAge({ age: 88 }) // 88
 Con ese comportamiento podríamos escribir rápidamente funciones derivadas.
 
 ```javascript
-const getAge = prop("age")
-const getName = prop("age")
-const getEmail = prop("email")
+const getAge = prop('age');
+const getName = prop('age');
+const getEmail = prop('email');
 ```
 
 --
 
-En lenguajes funcionales las funciones se comportan exactamente de esa manera pero en JS no.
+En lenguajes funcionales las funciones se comportan exactamente de esa manera, pero en JS no.
 
 --
 
@@ -484,17 +601,25 @@ En lenguajes funcionales las funciones se comportan exactamente de esa manera pe
 
 ### Curry
 
-El proceso de convertir una función que toma multiples argumentos, en una función que los toma uno a la vez.
+El proceso de convertir una función que toma multiples argumentos en una función que los toma uno cada la vez.
 
-Cada vez que la función es llamada, esta solamente acepta un argumento y retorna una funcion que toma el siguiente argumento y asi continua hasta que se pasen todos los argumentos.
+Cada vez que la función es llamada, esta solamente acepta un argumento y retorna una funcion que toma el siguiente argumento y así continúa hasta que se pasen todos los argumentos.
 
 ```javascript
-const sum = (a, b) => a + b
-const curriedSum = a => b => a + b
-curriedSum(40)(2) // 42.
-const add2 = curriedSum(2) // (b) => 2 + b
+const sum = (a, b) => a + b;
+const curriedSum = a => b => a + b;
 
-add2(10) // 12
+//es equivalente a
+const curriedSum = function(a) {
+    return function(b) {
+        return a + b;
+    };
+};
+
+curriedSum(40)(2); // 42.
+const add2 = curriedSum(2); // (b) => 2 + b
+
+add2(10); // 12
 ```
 
 --
@@ -502,11 +627,20 @@ add2(10) // 12
 ## Currificando funciones
 
 ```javascript
-const add = curry((a, b) => a + b)
-const numbers = [1, 2, 3, 4]
+//curry manual para función binaria
+const add = (a, b) => {
+    if (b === undefined) {
+        return b => a + b;
+    }
+    return a + b;
+};
 
-numbers.map(add(1)) // => [2,3,4,5]
-numbers.reduce(add, 0) // => 14
+//curry automático
+const add = curry((a, b) => a + b);
+const numbers = [1, 2, 3, 4];
+
+numbers.map(add(1)); // => [2,3,4,5]
+numbers.reduce(add, 0); // => 14
 ```
 
 --
@@ -524,12 +658,12 @@ Solución:
 
 ```javascript
 module.exports = function curry(fn) {
-  return function(a, b) {
-    if (a === undefined) return fn
-    else if (b === undefined) return b => fn(a, b)
-    return fn(a, b)
-  }
-}
+    return function(a, b) {
+        if (a === undefined) return fn;
+        else if (b === undefined) return b => fn(a, b);
+        return fn(a, b);
+    };
+};
 ```
 
 --
@@ -563,11 +697,11 @@ let curry = fn => { // (1)
 Aplicar parcialmente una funcion, significa crear una nueva funcion rellenando previamente alguno de los argumentos de la funcion original.
 
 ```javascript
-const partial = (f, ...args) => (...moreArgs) => f(...args, ...moreArgs)
+const partial = (f, ...args) => (...moreArgs) => f(...args, ...moreArgs);
 
-const add3 = (a, b, c) => a + b + c
-const fivePlus = partial(add3, 2, 3) // (c) => 2 + 3 + c
-fivePlus(4) // 9
+const add3 = (a, b, c) => a + b + c;
+const fivePlus = partial(add3, 2, 3); // (c) => 2 + 3 + c
+fivePlus(4); // 9
 ```
 
 --
@@ -575,14 +709,14 @@ fivePlus(4) // 9
 Aplicación parcial con bind
 
 ```javascript
-const add1More = add3.bind(null, 2, 3) // (c) => 2 + 3 + c
+const add1More = add3.bind(null, 2, 3); // (c) => 2 + 3 + c
 ```
 
 --
 
 ## Aplicación parcial vs curry
 
-* ¿Diferencias?
+*   ¿Diferencias?
 
 --
 

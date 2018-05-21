@@ -37,7 +37,13 @@ const ages = map(person => person.age, people);
 
 --
 
-### Implementar map
+### Map challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: MAP
+# Seguir instrucciones
+```
 
 ```javascript
 const map = (fn, array) => {
@@ -121,7 +127,13 @@ const adults = people.filter(person => person.age > 18);
 
 --
 
-### Implementar filter
+### Filter challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: FILTER
+# Seguir instrucciones
+```
 
 ```javascript
 const filter = (predicate, array) => {
@@ -180,7 +192,13 @@ const totalAge = people.reduce((acc, person) => acc + person.age, 0);
 
 --
 
-### Implementar reduce
+### Reduce challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: REDUCE
+# Seguir instrucciones
+```
 
 ```javascript
 const reduce = (fn, base, list) => {
@@ -201,3 +219,102 @@ const reduce = (fn, base, list) => {
     return result;
 };
 ```
+
+--
+
+### Implementar filter y map con reduce
+
+--
+
+### Implementar filter y map con reduce
+
+```javascript
+const map = (fn, list) =>
+    list.reduce((acc, v) => {
+        acc.push(fn(v));
+        return acc;
+    }, []);
+
+const filter = (predicate, list) =>
+    list.reduce((acc, v) => {
+        if (predicate(v)) {
+            acc.push(fn(v));
+        }
+        return acc;
+    }, []);
+```
+
+--
+
+### Performance
+
+```javascript
+const accounts = [
+    { balance: 100, currency: 'EUR', userId: 1 },
+    { balance: 300, currency: 'EUR', userId: 2 },
+    { balance: 200, currency: 'USD', userId: 1 }
+];
+
+const balanceUsd = accounts
+    .filter(({ currency: c }) => c === 'USD') //una iteración
+    .map(({ balance }) => balance) //otra iteración
+    .reduce(add, 0); //y otra iteración :S
+```
+
+Operar sobre listas puede tener problemas de
+performance:
+
+*   En tiempo, por hacer más de una iteración
+*   En espacio, porque se crean arrays intermedios
+
+--
+
+### Performance
+
+Técnicas para mejorar la performance:
+
+*   Lazyness (tiempo y espacio)
+*   Structural sharing (espacio)
+*   Transducers (tiempo y espacio)
+
+--
+
+### Performance - Lazyness
+
+--
+
+### Performance - Structural Sharing
+
+```javascript
+const append = (item, array) => {
+    //array.push(item) // NO -> se modifica el array in-place
+    return [...array, item];
+};
+```
+
+La inmutabilidad puede tener mala performance:
+
+*   clonamos todo el array para añadir un elemento
+*   el recolector de basura tiene que eliminar muchos objetos
+
+--
+
+### Performance - Structural Sharing
+
+Podemos usar estructuras de datos persistentes, que preservan y utilizan
+la versión anterior de sí mismas al modificarse
+
+[Inmutable.js](https://facebook.github.io/immutable-js/) las implementa en JS.
+
+```javascript
+const { Map } = require('immutable');
+const map1 = Map({ a: 1, b: 2, c: 3 });
+const map2 = map1.set('b', 50);
+map1.get('b') + ' vs. ' + map2.get('b'); // 2 vs. 50
+```
+
+--
+
+### Performance - Transducers
+
+--
