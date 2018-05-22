@@ -275,7 +275,6 @@ Técnicas para mejorar la performance:
 
 *   Lazyness (tiempo y espacio)
 *   Structural sharing (espacio)
-*   Transducers (tiempo y espacio)
 
 --
 
@@ -312,9 +311,3 @@ const map1 = Map({ a: 1, b: 2, c: 3 });
 const map2 = map1.set('b', 50);
 map1.get('b') + ' vs. ' + map2.get('b'); // 2 vs. 50
 ```
-
---
-
-### Performance - Transducers
-
---
