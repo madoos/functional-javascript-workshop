@@ -280,6 +280,43 @@ Técnicas para mejorar la performance:
 
 ### Performance - Lazyness
 
+Si podemos componer las operaciones sobre listas en una sola,
+y ejecutarla sólo cuando sea necesario, ahorraremos tiempo y espacio.
+
+--
+
+### Performance - Lazyness
+
+[Lazy.js](http://danieltao.com/lazy.js/) tiene una API similar a
+Underscore/Lodash y nos permite trabajar con secuencias que no se
+evalúan hasta que sea necesario.
+
+```javascript
+const people = [{name: 'Ana', age: 28}, {name: 'Harold': age: 20}, /*...*/]
+const result = Lazy(people)
+    .pluck('age')
+    .filter(age => age > 18)
+    .take(5);
+```
+
+--
+
+### Performance - Lazyness
+
+Con ES6 se exponen partes hasta entonces internas del lenguage: símbolos.
+Symbol.iterator nos permite crear estructuras que podemos iterar bajo demanda.
+
+```javascript
+const Numbers = {
+    [Symbol.iterator]: () => {
+        let n = 0;
+        return {
+            next: () => ({ done: false, value: n++ })
+        };
+    }
+};
+```
+
 --
 
 ### Performance - Structural Sharing
