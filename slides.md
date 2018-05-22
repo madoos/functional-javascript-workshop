@@ -2,8 +2,8 @@
 
 Objetivo:
 
-*   Entender los principios core de FP
-*   Hacer ejercicios prácticos para descubrir cómo facilitan algunas tareas
+* Entender los principios core de FP
+* Hacer ejercicios prácticos para descubrir cómo facilitan algunas tareas
 
 --
 
@@ -33,7 +33,6 @@ madoos-fp-js-workshop verify <FILE>
 ```
 
 ---
-
 ## Qué es la programación funcional
 
 Paradigma basado en programar con funciones
@@ -190,7 +189,6 @@ const total = users
 ```
 
 --
-
 ### high order function Challenge
 
 ```bash
@@ -204,7 +202,7 @@ const total = users
 Solución:
 
 ```javascript
-const apply = fn => args => fn(...args);
+const apply = fn => args => fn(...args)
 ```
 
 --
@@ -212,7 +210,6 @@ const apply = fn => args => fn(...args);
 Conclusión
 
 ---
-
 ## Operaciones sobre listas
 
 ### Obtener un array a partir de otro array
@@ -490,11 +487,47 @@ Técnicas para mejorar la performance:
 
 *   Lazyness (tiempo y espacio)
 *   Structural sharing (espacio)
-*   Transducers (tiempo y espacio)
 
 --
 
 ### Performance - Lazyness
+
+Si podemos componer las operaciones sobre listas en una sola,
+y ejecutarla sólo cuando sea necesario, ahorraremos tiempo y espacio.
+
+--
+
+### Performance - Lazyness
+
+[Lazy.js](http://danieltao.com/lazy.js/) tiene una API similar a
+Underscore/Lodash y nos permite trabajar con secuencias que no se
+evalúan hasta que sea necesario.
+
+```javascript
+const people = [{name: 'Ana', age: 28}, {name: 'Harold': age: 20}, /*...*/]
+const result = Lazy(people)
+    .pluck('age')
+    .filter(age => age > 18)
+    .take(5);
+```
+
+--
+
+### Performance - Lazyness
+
+Con ES6 se exponen partes hasta entonces internas del lenguage: símbolos.
+Symbol.iterator nos permite crear estructuras que podemos iterar bajo demanda.
+
+```javascript
+const Numbers = {
+    [Symbol.iterator]: () => {
+        let n = 0;
+        return {
+            next: () => ({ done: false, value: n++ })
+        };
+    }
+};
+```
 
 --
 
@@ -528,14 +561,7 @@ const map2 = map1.set('b', 50);
 map1.get('b') + ' vs. ' + map2.get('b'); // 2 vs. 50
 ```
 
---
-
-### Performance - Transducers
-
---
-
 ---
-
 ## Curry
 
 --
@@ -648,7 +674,6 @@ numbers.reduce(add, 0); // => 14
 ```
 
 --
-
 ### curry Challenge
 
 ```bash
@@ -728,7 +753,6 @@ const add1More = add3.bind(null, 2, 3); // (c) => 2 + 3 + c
 Conclusión
 
 ---
-
 ## Poniendo todo junto
 
 --
@@ -752,12 +776,12 @@ La composición es el arte de dividir un problema complejo en pequeñas unidades
 Este es un proceso manual y poco legible
 
 ```javascript
-const add5 = a => a + 5;
-const double = a => a * 2;
+const add5 = a => a + 5
+const double = a => a * 2
 
-const add5Double = a => double(add(a));
+const add5Double = a => double(add(a))
 
-add5Double(2); // => 14
+add5Double(2) // => 14
 ```
 
 --
@@ -765,7 +789,7 @@ add5Double(2); // => 14
 Este es un proceso manual y poco legible
 
 ```javascript
-const q = a => z(y(x(a)));
+const q = a => z(y(x(a)))
 ```
 
 --
@@ -784,22 +808,21 @@ En JS podemos adquirir este comportamiento implementado la función compose.
 Recuerda que la composición se aplica en orden inverso.
 
 ```javascript
-const q = compose(z, y, x);
-q(6);
+const q = compose(z, y, x)
+q(6)
 ```
 
 --
 
 ```javascript
-const compose = (f, g) => x => f(g(x)); // Definicion
+const compose = (f, g) => x => f(g(x)) // Definicion
 
-const toString = val => val.toString();
-const floorAndToString = compose(toString, Math.floor);
-floorAndToString(121.212121); // '121'
+const toString = val => val.toString()
+const floorAndToString = compose(toString, Math.floor)
+floorAndToString(121.212121) // '121'
 ```
 
 --
-
 ### compose Challenge
 
 ```bash
@@ -813,11 +836,11 @@ floorAndToString(121.212121); // '121'
 Implementar la función compose variadica
 
 ```javascript
-const plus = x => x + 1;
-const double = x => x * 2;
-const toString = x => String(x);
+const plus = x => x + 1
+const double = x => x * 2
+const toString = x => String(x)
 
-const composed = compose(toString, double, plus);
+const composed = compose(toString, double, plus)
 ```
 
 --
@@ -826,9 +849,9 @@ Solución
 
 ```javascript
 function compose(...fns) {
-    return function(arg) {
-        return fns.reduceRight((result, fn) => fn(result), arg);
-    };
+  return function(arg) {
+    return fns.reduceRight((result, fn) => fn(result), arg)
+  }
 }
 ```
 
@@ -839,7 +862,6 @@ La composición es extraña de leer porque se aplica de derecha a izquierda
 Es interesante tener una función que la aplique de izquierda a derecha
 
 --
-
 ### flip Challenge
 
 ```bash
@@ -854,22 +876,21 @@ Solución:
 
 ```javascript
 function flip(fn) {
-    return function(...args) {
-        return fn([...args].reverse());
-    };
+  return function(...args) {
+    return fn([...args].reverse())
+  }
 }
 ```
 
 ```javascript
-const concat = (a, b) => `${a} ${b}`;
-const concatReverse = flip(concat);
+const concat = (a, b) => `${a} ${b}`
+const concatReverse = flip(concat)
 
-concat('hello', 'world'); // => hello world
-concatReverse('hello', 'world'); // word hello
+concat("hello", "world") // => hello world
+concatReverse("hello", "world") // word hello
 ```
 
 --
-
 ### flow Challenge
 
 ```bash
@@ -884,11 +905,11 @@ Implementar la función flow variadica.
 Flow es como compose, la diferencia es que aplica las ejecuciones de izquierda a derecha
 
 ```javascript
-const plus = x => x + 1;
-const double = x => x * 2;
-const toString = x => String(x);
+const plus = x => x + 1
+const double = x => x * 2
+const toString = x => String(x)
 
-const flow = flow(plus, double, toString);
+const flow = flow(plus, double, toString)
 ```
 
 --
@@ -896,7 +917,7 @@ const flow = flow(plus, double, toString);
 Solución
 
 ```javascript
-const flow = flip(compose);
+const flow = flip(compose)
 ```
 
 --
@@ -904,7 +925,6 @@ const flow = flip(compose);
 ### conclusión
 
 ---
-
 ## Point free style
 
 --
@@ -913,7 +933,7 @@ Poner las funciones en el lugar más conveniente
 
 --
 
-Es un estilo de escribir funciones donde la definicion de la funcion no identifica de forma explicita los argumentos utilizados. Este estilo usualmente requiere currying o otra Funcion de Orden Superior. Este estilo de programacion tambien es conocido como Programacion Tacita.
+Es un estilo de escribir funciones donde la definición de la función no identifica de forma explícita los parámetros utilizados. Este estilo usualmente requiere currying o el uso de una función de Orden Superior. Este estilo de programación también es conocido como Programación Tácita.
 
 ```javascript
 const map = fn => list => list.map(fn);
@@ -924,7 +944,6 @@ const incrementAll2 = map(add(1));
 ```
 
 ---
-
 ### memoize Challenge
 
 ```bash
@@ -941,14 +960,14 @@ Crea una función que memoize el resultado de ejecuciones anteriores.
 
 ```javascript
 function fibonacci(n) {
-    if (n === 0 || n === 1) return n;
-    else return fibonacci(n - 1) + fibonacci(n - 2);
+  if (n === 0 || n === 1) return n
+  else return fibonacci(n - 1) + fibonacci(n - 2)
 }
 
-const fibonacciMemoized = memoize(fibonacci);
+const fibonacciMemoized = memoize(fibonacci)
 
-fibonacciMemoized(3); // 6 Calcula una única vez
-fibonacciMemoized(3); // 6
+fibonacciMemoized(3) // 6 Calcula una única vez
+fibonacciMemoized(3) // 6
 ```
 
 --
@@ -957,16 +976,15 @@ Solución:
 
 ```javascript
 function memoize(func) {
-    const memo = {};
-    return function(x) {
-        if (x in memo) return memo[x];
-        return (memo[x] = func(x));
-    };
+  const memo = {}
+  return function(x) {
+    if (x in memo) return memo[x]
+    return (memo[x] = func(x))
+  }
 }
 ```
 
 --
-
 ### once Challenge
 
 ```bash
@@ -982,12 +1000,12 @@ Crear una función que evite que otra funcion se ejecute más de una vez
 --
 
 ```javascript
-const debug = x => console.log(x);
+const debug = x => console.log(x)
 
-const debugOnce = once(debug);
+const debugOnce = once(debug)
 
-debugOnce(5); // 5
-debugOnce(5); // no se ejecuta
+debugOnce(5) // 5
+debugOnce(5) // no se ejecuta
 ```
 
 --
@@ -996,18 +1014,110 @@ Solución:
 
 ```javascript
 function once(func) {
-    let executed = false;
-    return function(...args) {
-        if (!executed) {
-            executed = true;
-            return func(...args);
+  let executed = false
+  return function(...args) {
+    if (!executed) {
+      executed = true
+      return func(...args)
+    }
+  }
+}
+```
+
+--
+### debounce Challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: DEBOUNCE
+# Seguir instrucciones
+```
+
+--
+
+Crea una función que retorne una función que, mientras sea invocada, no
+se ejecute. Se ejecutará cuando deje de ser invocada durante `ms` millisegundos.
+Si el último argumento (`immediate`) es `true`, se invocará primero y después
+dejará de ejecutarse cuando sea invocada.
+
+--
+
+```javascript
+const expensiveOnScrollFn = e => {
+    //do something on every scroll event
+};
+
+const efficientOnScrollFn = debounce(expensiveOnScrollFn, 250);
+
+window.addEventListener('scroll', efficientOnScrollFn);
+```
+
+--
+
+Solución:
+
+```javascript
+const debounce = (fn, ms, immediate = false) => {
+    let timeout;
+    return (...args) => {
+        const later = () => {
+            timeout = null;
+            if (!immediate) fn.apply(null, args);
+        };
+        const callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, ms);
+        if (callNow) fn.apply(null, args);
+    };
+};
+```
+
+--
+### throttle Challenge
+
+```bash
+# Ejecutar en el terminal: madoos-fp-js-workshop
+# Seleccionar: THROTTLE
+# Seguir instrucciones
+```
+
+--
+
+Crea una función que retorne una función que solo se ejecute cada `ms` millisegundos.
+La primera vez que es invocada debe ejecutarse inmediatamente.
+
+--
+
+```javascript
+const apiCall = () => {
+    /*call api*/
+};
+const throttledApiCall = throttle(apiCall, 200);
+
+//se ejecuta una vez cada 200ms
+```
+
+--
+
+Solución:
+
+```javascript
+function throttle(fn, ms) {
+    let wait = false;
+    return (...args) => {
+        if (wait) {
+            return;
         }
+        wait = true;
+        setTimeout(() => {
+            wait = false;
+        }, ms);
+        return fn(...args);
     };
 }
 ```
 
 --
-
 ### map values Challenge
 
 ```bash
@@ -1023,8 +1133,8 @@ Implementar la función mapValues.
 --
 
 ```javascript
-const double = x => x * 2;
-mapValues(double, { a: 1, b: 2 }); // { a: 2, b: 4}
+const double = x => x * 2
+mapValues(double, { a: 1, b: 2 }) // { a: 2, b: 4}
 ```
 
 --
@@ -1033,15 +1143,14 @@ Solución:
 
 ```javascript
 function mapValues(fn, obj) {
-    return Object.keys(obj).reduce((mapped, key) => {
-        mapped[key] = fn(obj[key]);
-        return mapped;
-    }, {});
+  return Object.keys(obj).reduce((mapped, key) => {
+    mapped[key] = fn(obj[key])
+    return mapped
+  }, {})
 }
 ```
 
 --
-
 ### map keys Challenge
 
 ```bash
@@ -1057,8 +1166,8 @@ Implementar la función mapKeys.
 --
 
 ```javascript
-const toUpper = x => x.toUpperCase();
-mapKeys(toUpper, { a: 1, b: 2 }); // { A: 1, B: 2}
+const toUpper = x => x.toUpperCase()
+mapKeys(toUpper, { a: 1, b: 2 }) // { A: 1, B: 2}
 ```
 
 --
@@ -1067,15 +1176,14 @@ Solución:
 
 ```javascript
 function mapKeys(fn, obj) {
-    return Object.keys(obj).reduce((mapped, key) => {
-        mapped[fn(key)] = obj[key];
-        return mapped;
-    }, {});
+  return Object.keys(obj).reduce((mapped, key) => {
+    mapped[fn(key)] = obj[key]
+    return mapped
+  }, {})
 }
 ```
 
 --
-
 ### map Object Challenge
 
 ```bash
@@ -1091,8 +1199,8 @@ Implementar la función map para objectos.
 --
 
 ```javascript
-const concatValueKey = (value, key, object) => `${key}-${value}`;
-mapObject(concatValueKey, { a: 1, b: 2 }); // { a: "a-1", b: "b-2"}
+const concatValueKey = (value, key, object) => `${key}-${value}`
+mapObject(concatValueKey, { a: 1, b: 2 }) // { a: "a-1", b: "b-2"}
 ```
 
 --
@@ -1101,11 +1209,16 @@ Solución:
 
 ```javascript
 function mapObject(fn, obj) {
-    return Object.keys(obj).reduce((mapped, key) => {
-        mapped[key] = fn(obj[key], key, obj);
-        return mapped;
-    }, {});
+  return Object.keys(obj).reduce((mapped, key) => {
+    mapped[key] = fn(obj[key], key, obj)
+    return mapped
+  }, {})
 }
 ```
+
+---
+Muchas gracias!!
+
+![picture](https://s5.eestatic.com/2016/12/16/social/Memes-Humor-Redes_sociales-Internet-La_Jungla_178744040_23538138_1706x960.jpg)
 
 ---
