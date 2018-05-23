@@ -1,7 +1,8 @@
 {
   "name": "madoos-fp-js-workshop",
   "version": "1.0.0",
-  "description": "The basics of functional programming in JavaScript. No libraries required.",
+  "description":
+    "The basics of functional programming in JavaScript. No libraries required.",
   "main": "index.js",
   "bin": {
     "madoos-fp-js-workshop": "functional-javascript.js"
@@ -13,11 +14,7 @@
     "build": "node ./scripts/build-presentation.js ",
     "presentation": "reveal-md -w --theme moon ./slides.md"
   },
-  "keywords": [
-    "workshopper",
-    "tutorial",
-    "lesson"
-  ],
+  "keywords": ["workshopper", "tutorial", "lesson"],
   "author": "Maurice Domínguez",
   "license": "MIT",
   "dependencies": {

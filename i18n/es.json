@@ -29,7 +29,9 @@
     "ONCE": "ONCE",
     "MAP VALUES": "MAP VALUES",
     "MAP KEYS": "MAP KEYS",
-    "MAP OBJECT": "MAP OBJECT"
+    "MAP OBJECT": "MAP OBJECT",
+    "DEBOUNCE": "DEBOUNCE",
+    "THROTTLE": "THROTTLE"
   },
   "exercises": {
     "hof": {

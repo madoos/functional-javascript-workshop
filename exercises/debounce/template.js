@@ -1,3 +1,3 @@
-module.exports = function debounce(fn) {
-    /* your implementation */
-};
+module.exports = function debounce(fn, ms, immediate = false) {
+  /* your implementation */
+}
