@@ -65,3 +65,4 @@ mónadas en un lenguage puro y el razonamiento por el cual se llega a ellas.
 *   [Clojure](https://clojure.org/)
 *   [Transducers](https://github.com/cognitect-labs/transducers-js)
 *   [Combinadores](https://github.com/fantasyland/fantasy-birds)
+*   [Category Theory for programmers](https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/)

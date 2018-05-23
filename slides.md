@@ -2,8 +2,8 @@
 
 Objetivo:
 
-* Entender los principios core de FP
-* Hacer ejercicios prácticos para descubrir cómo facilitan algunas tareas
+*   Entender los principios core de FP
+*   Hacer ejercicios prácticos para descubrir cómo facilitan algunas tareas
 
 --
 
@@ -48,6 +48,7 @@ madoos-fp-js-workshop verify <FILE>
 ![picture](http://www.relatably.com/m/img/functional-programming-memes/a0029dd1d26fc9b49d8898c4158f81dc11d9b3956413e468d06fcf014b118135.jpg)
 
 ---
+
 ## Qué es la programación funcional
 
 Paradigma basado en programar con funciones
@@ -204,6 +205,7 @@ const total = users
 ```
 
 --
+
 ### high order function Challenge
 
 ```bash
@@ -217,7 +219,7 @@ const total = users
 Solución:
 
 ```javascript
-const apply = fn => args => fn(...args)
+const apply = fn => args => fn(...args);
 ```
 
 --
@@ -225,6 +227,7 @@ const apply = fn => args => fn(...args)
 Conclusión
 
 ---
+
 ## Operaciones sobre listas
 
 ### Obtener un array a partir de otro array
@@ -577,6 +580,7 @@ map1.get('b') + ' vs. ' + map2.get('b'); // 2 vs. 50
 ```
 
 ---
+
 ## Curry
 
 --
@@ -689,6 +693,7 @@ numbers.reduce(add, 0); // => 14
 ```
 
 --
+
 ### curry Challenge
 
 ```bash
@@ -768,6 +773,7 @@ const add1More = add3.bind(null, 2, 3); // (c) => 2 + 3 + c
 Conclusión
 
 ---
+
 ## Poniendo todo junto
 
 --
@@ -791,12 +797,12 @@ La composición es el arte de dividir un problema complejo en pequeñas unidades
 Este es un proceso manual y poco legible
 
 ```javascript
-const add5 = a => a + 5
-const double = a => a * 2
+const add5 = a => a + 5;
+const double = a => a * 2;
 
-const add5Double = a => double(add(a))
+const add5Double = a => double(add(a));
 
-add5Double(2) // => 14
+add5Double(2); // => 14
 ```
 
 --
@@ -804,7 +810,7 @@ add5Double(2) // => 14
 Este es un proceso manual y poco legible
 
 ```javascript
-const q = a => z(y(x(a)))
+const q = a => z(y(x(a)));
 ```
 
 --
@@ -823,21 +829,22 @@ En JS podemos adquirir este comportamiento implementado la función compose.
 Recuerda que la composición se aplica en orden inverso.
 
 ```javascript
-const q = compose(z, y, x)
-q(6)
+const q = compose(z, y, x);
+q(6);
 ```
 
 --
 
 ```javascript
-const compose = (f, g) => x => f(g(x)) // Definicion
+const compose = (f, g) => x => f(g(x)); // Definicion
 
-const toString = val => val.toString()
-const floorAndToString = compose(toString, Math.floor)
-floorAndToString(121.212121) // '121'
+const toString = val => val.toString();
+const floorAndToString = compose(toString, Math.floor);
+floorAndToString(121.212121); // '121'
 ```
 
 --
+
 ### compose Challenge
 
 ```bash
@@ -851,11 +858,11 @@ floorAndToString(121.212121) // '121'
 Implementar la función compose variadica
 
 ```javascript
-const plus = x => x + 1
-const double = x => x * 2
-const toString = x => String(x)
+const plus = x => x + 1;
+const double = x => x * 2;
+const toString = x => String(x);
 
-const composed = compose(toString, double, plus)
+const composed = compose(toString, double, plus);
 ```
 
 --
@@ -864,9 +871,9 @@ Solución
 
 ```javascript
 function compose(...fns) {
-  return function(arg) {
-    return fns.reduceRight((result, fn) => fn(result), arg)
-  }
+    return function(arg) {
+        return fns.reduceRight((result, fn) => fn(result), arg);
+    };
 }
 ```
 
@@ -877,6 +884,7 @@ La composición es extraña de leer porque se aplica de derecha a izquierda
 Es interesante tener una función que la aplique de izquierda a derecha
 
 --
+
 ### flip Challenge
 
 ```bash
@@ -891,21 +899,22 @@ Solución:
 
 ```javascript
 function flip(fn) {
-  return function(...args) {
-    return fn([...args].reverse())
-  }
+    return function(...args) {
+        return fn([...args].reverse());
+    };
 }
 ```
 
 ```javascript
-const concat = (a, b) => `${a} ${b}`
-const concatReverse = flip(concat)
+const concat = (a, b) => `${a} ${b}`;
+const concatReverse = flip(concat);
 
-concat("hello", "world") // => hello world
-concatReverse("hello", "world") // word hello
+concat('hello', 'world'); // => hello world
+concatReverse('hello', 'world'); // word hello
 ```
 
 --
+
 ### flow Challenge
 
 ```bash
@@ -920,11 +929,11 @@ Implementar la función flow variadica.
 Flow es como compose, la diferencia es que aplica las ejecuciones de izquierda a derecha
 
 ```javascript
-const plus = x => x + 1
-const double = x => x * 2
-const toString = x => String(x)
+const plus = x => x + 1;
+const double = x => x * 2;
+const toString = x => String(x);
 
-const flow = flow(plus, double, toString)
+const flow = flow(plus, double, toString);
 ```
 
 --
@@ -932,7 +941,7 @@ const flow = flow(plus, double, toString)
 Solución
 
 ```javascript
-const flow = flip(compose)
+const flow = flip(compose);
 ```
 
 --
@@ -940,6 +949,7 @@ const flow = flip(compose)
 ### conclusión
 
 ---
+
 ## Point free style
 
 --
@@ -959,6 +969,7 @@ const incrementAll2 = map(add(1));
 ```
 
 ---
+
 ### memoize Challenge
 
 ```bash
@@ -975,14 +986,14 @@ Crea una función que memoize el resultado de ejecuciones anteriores.
 
 ```javascript
 function fibonacci(n) {
-  if (n === 0 || n === 1) return n
-  else return fibonacci(n - 1) + fibonacci(n - 2)
+    if (n === 0 || n === 1) return n;
+    else return fibonacci(n - 1) + fibonacci(n - 2);
 }
 
-const fibonacciMemoized = memoize(fibonacci)
+const fibonacciMemoized = memoize(fibonacci);
 
-fibonacciMemoized(3) // 6 Calcula una única vez
-fibonacciMemoized(3) // 6
+fibonacciMemoized(3); // 6 Calcula una única vez
+fibonacciMemoized(3); // 6
 ```
 
 --
@@ -991,15 +1002,16 @@ Solución:
 
 ```javascript
 function memoize(func) {
-  const memo = {}
-  return function(x) {
-    if (x in memo) return memo[x]
-    return (memo[x] = func(x))
-  }
+    const memo = {};
+    return function(x) {
+        if (x in memo) return memo[x];
+        return (memo[x] = func(x));
+    };
 }
 ```
 
 --
+
 ### once Challenge
 
 ```bash
@@ -1015,12 +1027,12 @@ Crear una función que evite que otra funcion se ejecute más de una vez
 --
 
 ```javascript
-const debug = x => console.log(x)
+const debug = x => console.log(x);
 
-const debugOnce = once(debug)
+const debugOnce = once(debug);
 
-debugOnce(5) // 5
-debugOnce(5) // no se ejecuta
+debugOnce(5); // 5
+debugOnce(5); // no se ejecuta
 ```
 
 --
@@ -1029,17 +1041,18 @@ Solución:
 
 ```javascript
 function once(func) {
-  let executed = false
-  return function(...args) {
-    if (!executed) {
-      executed = true
-      return func(...args)
-    }
-  }
+    let executed = false;
+    return function(...args) {
+        if (!executed) {
+            executed = true;
+            return func(...args);
+        }
+    };
 }
 ```
 
 --
+
 ### debounce Challenge
 
 ```bash
@@ -1088,6 +1101,7 @@ const debounce = (fn, ms, immediate = false) => {
 ```
 
 --
+
 ### throttle Challenge
 
 ```bash
@@ -1133,6 +1147,7 @@ function throttle(fn, ms) {
 ```
 
 --
+
 ### map values Challenge
 
 ```bash
@@ -1148,8 +1163,8 @@ Implementar la función mapValues.
 --
 
 ```javascript
-const double = x => x * 2
-mapValues(double, { a: 1, b: 2 }) // { a: 2, b: 4}
+const double = x => x * 2;
+mapValues(double, { a: 1, b: 2 }); // { a: 2, b: 4}
 ```
 
 --
@@ -1158,14 +1173,15 @@ Solución:
 
 ```javascript
 function mapValues(fn, obj) {
-  return Object.keys(obj).reduce((mapped, key) => {
-    mapped[key] = fn(obj[key])
-    return mapped
-  }, {})
+    return Object.keys(obj).reduce((mapped, key) => {
+        mapped[key] = fn(obj[key]);
+        return mapped;
+    }, {});
 }
 ```
 
 --
+
 ### map keys Challenge
 
 ```bash
@@ -1181,8 +1197,8 @@ Implementar la función mapKeys.
 --
 
 ```javascript
-const toUpper = x => x.toUpperCase()
-mapKeys(toUpper, { a: 1, b: 2 }) // { A: 1, B: 2}
+const toUpper = x => x.toUpperCase();
+mapKeys(toUpper, { a: 1, b: 2 }); // { A: 1, B: 2}
 ```
 
 --
@@ -1191,14 +1207,15 @@ Solución:
 
 ```javascript
 function mapKeys(fn, obj) {
-  return Object.keys(obj).reduce((mapped, key) => {
-    mapped[fn(key)] = obj[key]
-    return mapped
-  }, {})
+    return Object.keys(obj).reduce((mapped, key) => {
+        mapped[fn(key)] = obj[key];
+        return mapped;
+    }, {});
 }
 ```
 
 --
+
 ### map Object Challenge
 
 ```bash
@@ -1214,8 +1231,8 @@ Implementar la función map para objectos.
 --
 
 ```javascript
-const concatValueKey = (value, key, object) => `${key}-${value}`
-mapObject(concatValueKey, { a: 1, b: 2 }) // { a: "a-1", b: "b-2"}
+const concatValueKey = (value, key, object) => `${key}-${value}`;
+mapObject(concatValueKey, { a: 1, b: 2 }); // { a: "a-1", b: "b-2"}
 ```
 
 --
@@ -1224,19 +1241,21 @@ Solución:
 
 ```javascript
 function mapObject(fn, obj) {
-  return Object.keys(obj).reduce((mapped, key) => {
-    mapped[key] = fn(obj[key], key, obj)
-    return mapped
-  }, {})
+    return Object.keys(obj).reduce((mapped, key) => {
+        mapped[key] = fn(obj[key], key, obj);
+        return mapped;
+    }, {});
 }
 ```
 
 ---
+
 Muchas gracias!!
 
 ![picture](https://s5.eestatic.com/2016/12/16/social/Memes-Humor-Redes_sociales-Internet-La_Jungla_178744040_23538138_1706x960.jpg)
 
 ---
+
 ### Libros y artículos
 
 *   [Functional Light JS](https://github.com/getify/Functional-Light-JS)
