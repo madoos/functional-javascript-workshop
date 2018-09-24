@@ -14,8 +14,8 @@ const handleType = curry(
             does not comply with the signature 
             "${signature}"
             in param number ${i + 1} 
-            with value "${args[1]}" 
-            and type ${typeof args[1]} 
+            with value "${args[i]}" 
+            and type ${typeof args[i]} 
             `
       )
     }

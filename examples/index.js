@@ -22,8 +22,8 @@ Error: the function addDefinition
             does not comply with the signature
             "Number -> Number -> Number"
             in param number 1
-            with value "1"
+            with value "hello"
             and type string
 
 */
-console.log(add("1")(1))
+console.log(add("hello", 2))
