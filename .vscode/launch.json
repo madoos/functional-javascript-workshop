@@ -21,6 +21,15 @@
       "args": ["basic map"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
+    },
+
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "current file",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
     }
   ]
 }
