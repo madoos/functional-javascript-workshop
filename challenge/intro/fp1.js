@@ -21,10 +21,4 @@ console.log(
     .map(replaceWhen(and(isMultOf3, isMultOf5), "fizzbuzz"))
     .map(replaceWhen(isMultOf3, "fizz"))
     .map(replaceWhen(isMultOf5, "buzz"))
-
-  //.map(
-  //  replaceWhen(replaceWhen(and(isMultOf3, isMultOf5), "fizzbuzz"))
-  // )
-  //  .map(replaceWhen(isMultOf3, "fizz"))
-  //  .map(replaceWhen(isMultOf5, "buzz"))
 )
