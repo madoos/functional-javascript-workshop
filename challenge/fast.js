@@ -33,7 +33,7 @@ curriedFilter = curry((f, xs) => {
 const suite = new Benchmark.Suite()
 
 const src = []
-for (let i = 0; i < 1e5; i++) src[i] = i
+for (let i = 0; i < 1e1; i++) src[i] = i
 
 const inc = n => n + 1
 const isEven = n => n % 2 == 0
